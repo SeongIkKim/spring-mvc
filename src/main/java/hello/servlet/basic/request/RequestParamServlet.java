@@ -11,13 +11,14 @@ import java.util.Arrays;
 /**
  * 1. 파라미터 전송 기능
  * http://localhost:8080/request-param?username=hello&age=20
+ * 2. HTML form data 파싱
  */
 @WebServlet(name="requestParamServlet", urlPatterns = "/request-param")
 public class RequestParamServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         System.out.println("[전체 파라미터 조회] - start");
-        req.getParameterNames().asIterator()
+        req.getParameterNames().asIterator() // getParameter()는 GET의 쿼리파라미터나 POST의 x-www-form-urlencoded나 형식이 같으므로 둘다 파싱가능하다.
                 .forEachRemaining(paramName -> System.out.println(paramName + "=" + req.getParameter(paramName) ));
         System.out.println("[전체 파라미터 조회] - end");
         System.out.println();
