@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -84,11 +85,19 @@ public class BasicItemController {
         return "basic/item";
     }
 
-    @PostMapping("/add")
+//    @PostMapping("/add")
     public String addItemV5(Item item){
         itemRepository.save(item);
         // 새로고침 시 중복 POST 요청을 피하기 위해 PRG(Post-Redirect-Get)
         return "redirect:/basic/items/" + item.getId(); // 다만 이방식은 한글이나 특수문자 등 사용 시 변수가 URL 인코딩이 안되기때문에 위험.
+    }
+
+    @PostMapping("/add")
+    public String addItemV6(Item item, RedirectAttributes redirectAttributes){
+        Item savedItem = itemRepository.save(item);
+        redirectAttributes.addAttribute("itemId", savedItem.getId()); // URL 인코딩이 되도록 redirect에 변수를 등록해줌
+        redirectAttributes.addAttribute("status", true); // redirect string에서 사용되지 않은 변수는 쿼리파라미터로 들어감(?status=true)
+        return "redirect:/basic/items/{itemId}";
     }
 
     @GetMapping("/{itemId}/edit")
