@@ -98,4 +98,10 @@ public class BasicItemController {
         return "redirect:/basic/items/{itemId}"; // redirect사용가능, itemId는 pathVariable 값을 그대로 사용함
     }
 
+    @PostMapping("/{itemId}/delete")
+    public String DeleteItem(@PathVariable Long itemId){
+        itemRepository.delete(itemId);
+        return "redirect:/basic/items";
+    }
+
 }

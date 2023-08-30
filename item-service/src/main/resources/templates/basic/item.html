@@ -36,6 +36,7 @@
 
     <hr class="my-4">
 
+    <form th:action="@{/basic/items/{itemId}/delete(itemId=${item.id})}" method="post">
     <div class="row">
         <div class="col">
             <button class="w-100 btn btn-primary btn-lg" onclick="location.href='editForm.html'"
@@ -43,10 +44,7 @@
                     type="button">상품 수정</button>
         </div>
         <div class="col">
-            <button class="w-100 btn btn-danger btn-lg"
-                    onclick="location.href='items.html'"
-                    th:onclick="|location.href='@{/basic/items/{itemId}/delete(itemId=${item.id}}'|"
-                    type="button">상품 삭제</button>
+            <button class="w-100 btn btn-danger btn-lg" type="submit"  formmethod="post">상품 삭제</button>
         </div>
         <div class="col">
             <button class="w-100 btn btn-secondary btn-lg"
@@ -55,6 +53,7 @@
                     type="button">목록으로</button>
         </div>
     </div>
+    </form>
 
 </div> <!-- /container -->
 </body>
