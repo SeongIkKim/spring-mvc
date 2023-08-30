@@ -77,13 +77,20 @@ public class BasicItemController {
         return "basic/item";
     }
 
-    @PostMapping("/add")
+//    @PostMapping("/add")
     public String addItemV4(Item itemmmm){
         // 클래스명을 camelCase로 바꾼 "item"이 모델 Attribute에 등록된다(변수명과 관계 X).
         itemRepository.save(itemmmm);
         return "basic/item";
     }
-    
+
+    @PostMapping("/add")
+    public String addItemV5(Item item){
+        itemRepository.save(item);
+        // 새로고침 시 중복 POST 요청을 피하기 위해 PRG(Post-Redirect-Get)
+        return "redirect:/basic/items/" + item.getId(); // 다만 이방식은 한글이나 특수문자 등 사용 시 변수가 URL 인코딩이 안되기때문에 위험.
+    }
+
     @GetMapping("/{itemId}/edit")
     public String editForm(@PathVariable Long itemId, Model model){
         Item item = itemRepository.findById(itemId);
